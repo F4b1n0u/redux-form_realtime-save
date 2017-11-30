@@ -4,32 +4,24 @@ import { Provider } from 'react-redux'
 import { createStore, combineReducers } from 'redux'
 import { reducer as reduxFormReducer } from 'redux-form'
 
-import account from './account'
+import accountReducer from './modules/account'
+
+import App from './components/app'
 
 const dest = document.getElementById('content')
 
 const reducer = combineReducers({
-  account,
+  account: accountReducer,
   form: reduxFormReducer // mounted under "form"
 })
 const store = (window.devToolsExtension
   ? window.devToolsExtension()(createStore)
   : createStore)(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
-const showResults = values =>
-  new Promise(resolve => {
-    setTimeout(() => {
-      // simulate server latency
-      window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`)
-      resolve()
-    }, 500)
-  })
-
 let render = () => {
-  const InitializeFromStateForm = require('./InitializeFromStateForm').default
   ReactDOM.render(
     <Provider store={store}>
-      <InitializeFromStateForm onSubmit={showResults} />
+      <App />
     </Provider>,
     dest
   )
@@ -54,7 +46,6 @@ if (module.hot) {
     setTimeout(render)
   }
   module.hot.accept('./InitializeFromStateForm', rerender)
-  module.hot.accept('./InitializeFromState.md', rerender)
   module.hot.accept('!!raw-loader!./InitializeFromStateForm', rerender)
 }
 

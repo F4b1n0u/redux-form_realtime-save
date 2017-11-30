@@ -4,7 +4,7 @@ import { Field, reduxForm } from 'redux-form'
 import {
   load as loadAccount,
   getData as getAccountData,
-} from './account'
+} from './modules/account'
 
 const colors = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Violet']
 
@@ -110,17 +110,18 @@ let InitializeFromStateForm = props => {
   )
 }
 
-// Decorate with reduxForm(). It will read the initialValues prop provided by connect()
 InitializeFromStateForm = reduxForm({
-  form: 'initializeFromState' // a unique identifier for this form
+  form: 'initializeFromState',
+  enableReinitialize: true,
 })(InitializeFromStateForm)
 
-// You have to connect() to any reducers that you wish to connect to yourself
 InitializeFromStateForm = connect(
   state => ({
     initialValues: getAccountData(state)
   }),
-  { load: loadAccount } // bind account loading action creator
+  dispatch => ({
+    load: () => dispatch(loadAccount())
+  })
 )(InitializeFromStateForm)
 
 export default InitializeFromStateForm

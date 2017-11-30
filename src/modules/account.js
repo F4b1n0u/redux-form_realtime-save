@@ -17,7 +17,7 @@ export const load = () => ({
   payload: {
     firstName: 'Jane',
     lastName: 'Doe',
-    age: '42',
+    age: Date.now(),
     sex: 'female',
     employed: true,
     favoriteColor: 'Blue',
