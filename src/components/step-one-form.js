@@ -1,8 +1,8 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 
-let StepOneForm = ({ colors, onSubmit, load, pristine, reset, submitting }) => (
-  <form onSubmit={onSubmit}>
+let StepOneForm = ({ colors, handleSubmit, load, pristine, reset, submitting }) => (
+  <form onSubmit={handleSubmit}>
     <div>
       <button type="button" onClick={() => load()}>
         Load Account

@@ -13,6 +13,13 @@ export default connect(
     colors: ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Violet']
   }),
   dispatch => ({
-    load: () => dispatch(loadAccount())
+    load: () => dispatch(loadAccount()),
+    onSubmit: values => new Promise(resolve => {
+      setTimeout(() => {
+        // simulate server latency
+        window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`)
+        resolve()
+      }, 500)
+    })
   })
 )(StepOneForm)
