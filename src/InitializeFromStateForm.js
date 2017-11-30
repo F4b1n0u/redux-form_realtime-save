@@ -1,7 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
-import { load as loadAccount } from './account'
+import {
+  load as loadAccount,
+  getData as getAccountData,
+} from './account'
 
 const colors = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Violet']
 
@@ -115,7 +118,7 @@ InitializeFromStateForm = reduxForm({
 // You have to connect() to any reducers that you wish to connect to yourself
 InitializeFromStateForm = connect(
   state => ({
-    initialValues: state.account.data // pull initial values from account reducer
+    initialValues: getAccountData(state)
   }),
   { load: loadAccount } // bind account loading action creator
 )(InitializeFromStateForm)

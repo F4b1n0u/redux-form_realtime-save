@@ -25,4 +25,6 @@ export const load = () => ({
   }
 })
 
+export const getData = state => state.account.data
+
 export default reducer
