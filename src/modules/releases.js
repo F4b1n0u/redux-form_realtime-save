@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable'
 import { combineReducers } from 'redux'
 import { combineEpics } from 'redux-observable'
 import { fetchReleases, saveRelease } from '../services/artists-spinnup'
-import { stopSubmit } from 'redux-form'
+// import { stopSubmit } from 'redux-form'
 
 export const KEY = 'releases'
 

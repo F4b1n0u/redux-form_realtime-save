@@ -1,10 +1,10 @@
 import React from 'react'
 
-import ReleaseForm from '../containers/release-form'
+import ReleaseForms from '../containers/release-forms'
 
 const App = () => {
   return (
-    <ReleaseForm index={0}/>
+    <ReleaseForms />
   )
 }
 

@@ -15,7 +15,7 @@ export default class ReleaseForm extends Component {
       // redux-form props
       handleSubmit,
       onSubmit,
-      submitting
+      // submitting
     } = this.props
 
     return (

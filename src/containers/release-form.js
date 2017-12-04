@@ -15,21 +15,18 @@ import ReleaseForm from '../components/release-form'
 
 const getFormName = props => `${RELEASES_FORM_KEY}[${props.index}]`
 
-const ReleaseReduxForm = compose(
-  connect((state, ownProps) => ({
-    form: getFormName(ownProps),
-    enableReinitialize: true,
-    destroyOnUnmount: false,
-  })),
+export default compose(
+  connect(
+    (state, ownProps) => ({
+      form: getFormName(ownProps),
+      enableReinitialize: true,
+      destroyOnUnmount: false,
+      initialValues: getReleaseByIndex(state, ownProps.index),
+    }),
+    (dispatch, ownProps) => ({
+      load: () => dispatch(requestAllReleases()),
+      onSubmit: () => dispatch(startSubmit(getFormName(ownProps))),
+    })
+  ),
   reduxForm({ enableReinitialize: true, }),
 )(ReleaseForm)
-
-export default connect(
-  (state, ownProps) => ({
-    initialValues: getReleaseByIndex(state, ownProps.index),
-  }),
-  (dispatch, ownProps) => ({
-    load: () => dispatch(requestAllReleases()),
-    onSubmit: () => dispatch(startSubmit(getFormName(ownProps))),
-  })
-)(ReleaseReduxForm)

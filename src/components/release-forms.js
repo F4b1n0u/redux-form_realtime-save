@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 
-import ReleaseForm from '../components/release-form'
+import ReleaseForm from '../containers/release-form'
 
 export default class ReleaseForms extends Component {
   componentWillMount() {
     const {
-      load
+      load = () => {},
     } = this.props
 
     load()
@@ -13,25 +13,16 @@ export default class ReleaseForms extends Component {
 
   render() {
     const {
-      initialValues,
-      onReleaseSubmit,
-      // redux-form props
-      handleSubmit,
-      onSubmit,
-      submitting
+      releases,
     } = this.props
 
     return (
       <div>
         {
-          initialValues.map((release, index) => (
+          releases.map((release, index) => (
             <ReleaseForm
-              {...release}
-              key={index}
+              key={release.id}
               index={index}
-              handleSubmit={handleSubmit}
-              onSubmit={onReleaseSubmit.bind(null, index)}
-              submitting
             />
           ))
         }
