@@ -1,9 +1,9 @@
 import React from 'react'
 
-import StepOneFormContainer from '../containers/step-one-form'
+import Release from '../containers/release'
 
 export default props => {
   return (
-    <StepOneFormContainer/>
+    <Release/>
   )
 }
