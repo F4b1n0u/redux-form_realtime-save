@@ -6,16 +6,15 @@ import { actionTypes } from 'redux-form'
 import {
   reducer,
   getFormValues,
-  startSubmit,
-  stopSubmit,
-} from 'redux-form';
+} from 'redux-form'
 
 import {
-  RECEIVE_SAVE_SUCCESS,
   requestSave as requestSaveRelease,
 } from './releases'
 
 export const KEY = 'form' // default one ! DO NOT TOUCH before checking documentation
+
+export const RELEASES_FORM_KEY = 'releases'
 
 // ///////////
 // DETERMINISTIC ACTIONS
@@ -47,50 +46,28 @@ export default reducer
 // EPICS
 // ///////////
 
-// const submitEpic = (action$, store) => action$
-//   .ofType(actionTypes.SUBMIT)
-//   .mergeMap(({ meta: { form } }) =>  {
-//     const state = store.getState()
-    
-//     let result
-
-//     switch(form) {
-//       case 'release':
-//           result = Observable.of(startSubmit(form))
-//         break
-//       default:
-//         result = Observable.empty()
-//         break
-//     }
-
-//     return result
-//   })
-
 const submitSuccessEpic = (action$, store) => action$
   .ofType(actionTypes.SET_SUBMIT_SUCCEEDED)
   .mergeMap(({ meta: { form } }) => {
     const state = store.getState()
     
-    let result
+    let observable
 
-    switch(form) {
-      case 'release':
+    const formKey = form.split('[')[0]
+
+    switch(formKey) {
+      case RELEASES_FORM_KEY:
         const release = getFormValues(form)(state)
-        result = Observable.of(requestSaveRelease(release))
+        observable = Observable.of(requestSaveRelease(release))
         break
       default:
-        result = Observable.empty()
+        observable = Observable.empty()
         break
     }
 
-    return result
+    return observable
   })
-
-const receiveSaveReleaseSuccessEpic = (action$, store) => action$
-  .ofType(RECEIVE_SAVE_SUCCESS)
-  .mergeMap(action => Observable.of(stopSubmit('release')))
 
 export const epic = combineEpics(
   submitSuccessEpic,
-  receiveSaveReleaseSuccessEpic,
 )

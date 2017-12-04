@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable'
 import { combineReducers } from 'redux'
 import { combineEpics } from 'redux-observable'
 import { fetchReleases, saveRelease } from '../services/artists-spinnup'
+import { stopSubmit } from 'redux-form'
 
 export const KEY = 'releases'
 
@@ -71,6 +72,10 @@ export default combineReducers({
 // ///////////
 
 export const get = (state, releaseId) => state[KEY].byId[releaseId]
+export const getByIndex = (state, index) => {
+  const id = state[KEY].allIds[index] // try to avoid that ...
+  return get(state, id)
+}
 export const getAll = state => state[KEY].allIds.map(get.bind(null, state))
 
 // ///////////
@@ -137,11 +142,13 @@ const receiveReleasesEpic = (action$, store) => action$
 
 const saveReleaseEpic = action$ => action$
   .ofType(REQUEST_SAVE)
-  .debounceTime(500)
-  .mergeMap(action => saveRelease(action.payload)
-      .takeUntil(action$.ofType(REQUEST_SAVE))
+  .mergeMap((action) => saveRelease(action.payload)
+      .takeUntil(action$.filter(
+        ({ type, payload }) => type === REQUEST_SAVE && payload.id === action.payload.id
+      ))
       .mergeMap(response => Observable.of(receiveSave(response)))
       .catch(error => Observable.of(receiveSaveFailure(error)))
+      // .mergeMap(() => Observable.of(stopSubmit(action.payload.id)))
   )
 
 export const epic = combineEpics(

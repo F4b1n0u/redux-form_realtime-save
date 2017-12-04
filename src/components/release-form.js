@@ -1,20 +1,17 @@
 import React, { Component } from 'react'
-import { Field, FormSection, reduxForm } from 'redux-form'
+import { Field } from 'redux-form'
 
-const formId = 'release'
-
-export class ReleaseForm extends Component {
+export default class ReleaseForm extends Component {
   componentWillMount() {
     const {
       load
     } = this.props
 
-    load()
+    load && load()
   }
 
   render() {
     const {
-      id,
       // redux-form props
       handleSubmit,
       onSubmit,
@@ -23,11 +20,11 @@ export class ReleaseForm extends Component {
 
     return (
       <form>
-        {submitting && (
+        {/* {submitting && (
           <div>
             {'saving ...'}
           </div>
-        )}
+        )} */}
           <div>
             <label>Description</label>
             <div>
@@ -56,8 +53,3 @@ export class ReleaseForm extends Component {
     )
   }
 }
-
-export default reduxForm({
-  form: formId,
-  enableReinitialize: true,
-})(ReleaseForm)

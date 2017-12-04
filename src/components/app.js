@@ -1,9 +1,11 @@
 import React from 'react'
 
-import Release from '../containers/release'
+import ReleaseForm from '../containers/release-form'
 
-export default props => {
+const App = () => {
   return (
-    <Release/>
+    <ReleaseForm index={0}/>
   )
 }
+
+export default App 
