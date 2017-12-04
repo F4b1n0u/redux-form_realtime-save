@@ -71,12 +71,13 @@ export default combineReducers({
 // SELECTORS
 // ///////////
 
-export const get = (state, releaseId) => state[KEY].byId[releaseId]
-export const getByIndex = (state, index) => {
-  const id = state[KEY].allIds[index] // try to avoid that ...
-  return get(state, id)
-}
-export const getAll = state => state[KEY].allIds.map(get.bind(null, state))
+export const getState = state => state[KEY]
+export const getIdByIndex = (state, index) => getState(state).allIds[index]
+export const getIndexById = (state, id) => getState(state).allIds.indexOf(id)
+export const getByIndex = (state, index) => getById(state, getIdByIndex(state, index))
+export const getById = (state, releaseId) => getState(state).byId[releaseId]
+export const getAllIds = state => getState(state).allIds
+export const getAll = state => getAllIds(state).map(getById.bind(null, state))
 
 // ///////////
 // NON DETERMINISTIC ACTIONS

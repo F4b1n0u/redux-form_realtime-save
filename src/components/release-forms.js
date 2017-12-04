@@ -13,15 +13,15 @@ export default class ReleaseForms extends Component {
 
   render() {
     const {
-      releases,
+      releaseIds,
     } = this.props
 
     return (
       <div>
         {
-          releases.map((release, index) => (
+          releaseIds.map((id, index) => (
             <ReleaseForm
-              key={release.id}
+              key={id}
               index={index}
             />
           ))
