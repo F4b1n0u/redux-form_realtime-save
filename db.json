@@ -1,0 +1,21 @@
+{
+  "releases": [
+    {
+      "id": 112300,
+      "provider_id": "1358388281",
+      "is_cover_authorized": "null",
+      "is_pending_submission": "false",
+      "product_id": "1",
+      "artist_id": "1",
+      "cancelled_at": "null",
+      "expires_at": "null",
+      "takedown_at": "null",
+      "description": "ploplo",
+      "price": "123",
+      "original_price": "9.99",
+      "currency": "EUR",
+      "product": "[object Object]",
+      "payments": ""
+    }
+  ]
+}
