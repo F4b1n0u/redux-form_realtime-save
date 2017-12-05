@@ -1,10 +1,10 @@
 import React from 'react'
 
-import ReleaseForms from '../containers/release-forms'
+import PeopleForms from '../containers/people-forms'
 
 const App = () => {
   return (
-    <ReleaseForms />
+    <PeopleForms />
   )
 }
 

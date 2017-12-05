@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Field } from 'redux-form'
 
-export default class ReleaseForm extends Component {
+export default class PeopleForm extends Component {
   componentWillMount() {
     const {
       load
@@ -26,25 +26,36 @@ export default class ReleaseForm extends Component {
           </div>
         )} */}
           <div>
-            <label>Description</label>
+            <label>Name</label>
             <div>
               <Field
-                name={`description`}
+                name="name"
                 component="input"
                 type="text"
-                placeholder="Description"
+                placeholder="Name"
                 onBlur={handleSubmit(onSubmit)}
               />
             </div>
           </div>
           <div>
-            <label>Price</label>
+            <label>Age</label>
             <div>
               <Field
-                name={`price`}
+                name="age"
                 component="input"
                 type="number"
-                placeholder="Price"
+                placeholder="Age"
+                onBlur={handleSubmit(onSubmit)}
+              />
+            </div>
+          </div>
+          <div>
+            <label>isNice</label>
+            <div>
+              <Field
+                name="isNice"
+                component="input"
+                type="checkbox"
                 onBlur={handleSubmit(onSubmit)}
               />
             </div>

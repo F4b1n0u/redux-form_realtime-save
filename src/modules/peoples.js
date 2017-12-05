@@ -3,10 +3,10 @@ import 'rxjs'
 import { Observable } from 'rxjs/Observable'
 import { combineReducers } from 'redux'
 import { combineEpics } from 'redux-observable'
-import { fetchReleases, saveRelease } from '../services/artists-spinnup'
+import { fetchPeoples, savePeople } from '../services/system-people'
 // import { stopSubmit } from 'redux-form'
 
-export const KEY = 'releases'
+export const KEY = 'peoples'
 
 // ///////////
 // DETERMINISTIC ACTIONS
@@ -18,9 +18,9 @@ export const PUT = `spinnup-proto/${KEY}/PUT`
 // ACTION CREATORS
 // ///////////
 
-export const putReleases = releases => ({
+export const putPeoples = peoples => ({
   type: PUT,
-  payload: releases,
+  payload: peoples,
 })
 
 // ///////////
@@ -38,7 +38,7 @@ const allIdsReducer = (
 ) => {
   switch (action.type) {
     case PUT:
-      return action.payload.map(release => release.id)
+      return action.payload.map(people => people.id)
     default:
       return state
   }
@@ -51,8 +51,8 @@ const byIdReducer = (
   switch (action.type) {
     case PUT:
       return action.payload.reduce(
-        (map, release) => {
-          map[release.id] = release
+        (map, people) => {
+          map[people.id] = people
           return map
         },
         {}
@@ -75,7 +75,7 @@ export const getState = state => state[KEY]
 export const getIdByIndex = (state, index) => getState(state).allIds[index]
 export const getIndexById = (state, id) => getState(state).allIds.indexOf(id)
 export const getByIndex = (state, index) => getById(state, getIdByIndex(state, index))
-export const getById = (state, releaseId) => getState(state).byId[releaseId]
+export const getById = (state, peopleId) => getState(state).byId[peopleId]
 export const getAllIds = state => getState(state).allIds
 export const getAll = state => getAllIds(state).map(getById.bind(null, state))
 
@@ -98,9 +98,9 @@ export const requestAll = () => ({
   type: REQUEST_ALL,
 })
 
-export const receiveAll = (releases) => ({
+export const receiveAll = (peoples) => ({
   type: RECEIVE_ALL_SUCCESS,
-  payload: releases,
+  payload: peoples,
 })
 
 export const receiveAllFailure = ({ error, validData}) => ({
@@ -111,39 +111,39 @@ export const receiveAllFailure = ({ error, validData}) => ({
   }
 })
 
-export const requestSave = release => ({
+export const requestSave = people => ({
   type: REQUEST_SAVE,
-  payload: release,
+  payload: people,
 })
 
-export const receiveSave = updatedRelease => ({
+export const receiveSave = updatedPeople => ({
   type: RECEIVE_SAVE_SUCCESS,
-  payload: updatedRelease,
+  payload: updatedPeople,
 })
 
-export const receiveSaveFailure = latestRelease => ({
+export const receiveSaveFailure = latestPeople => ({
   type: RECEIVE_SAVE_FAILURE,
-  payload: latestRelease,
+  payload: latestPeople,
 })
 
 // ///////////
 // EPICS
 // ///////////
 
-const requestReleasesEpic = (action$, store) => action$
+const requestPeoplesEpic = (action$, store) => action$
   .ofType(REQUEST_ALL)
-  .mergeMap(() => fetchReleases()
+  .mergeMap(() => fetchPeoples()
       .mergeMap(response => Observable.of(receiveAll(response)))
       .catch(error => Observable.of(receiveAllFailure(error)))
   )
 
-const receiveReleasesEpic = (action$, store) => action$
+const receivePeoplesEpic = (action$, store) => action$
   .ofType(RECEIVE_ALL_SUCCESS)
-  .mergeMap(action => Observable.of(putReleases(action.payload)))
+  .mergeMap(action => Observable.of(putPeoples(action.payload)))
 
-const saveReleaseEpic = action$ => action$
+const savePeopleEpic = action$ => action$
   .ofType(REQUEST_SAVE)
-  .mergeMap((action) => saveRelease(action.payload)
+  .mergeMap((action) => savePeople(action.payload)
       .takeUntil(action$.filter(
         ({ type, payload }) => type === REQUEST_SAVE && payload.id === action.payload.id
       ))
@@ -153,7 +153,7 @@ const saveReleaseEpic = action$ => action$
   )
 
 export const epic = combineEpics(
-  requestReleasesEpic,
-  receiveReleasesEpic,
-  saveReleaseEpic,
+  requestPeoplesEpic,
+  receivePeoplesEpic,
+  savePeopleEpic,
 )

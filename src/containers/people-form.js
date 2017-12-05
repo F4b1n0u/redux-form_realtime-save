@@ -3,17 +3,15 @@ import { connect } from 'react-redux'
 import { reduxForm, startSubmit } from 'redux-form'
 
 import {
-  requestAll as requestAllReleases,
-  getByIndex as getReleaseByIndex,
-} from '../modules/releases'
+  requestAll as requestAllPeoples,
+  getByIndex as getPeopleByIndex,
+} from '../modules/peoples'
 
-import {
-  RELEASES_FORM_KEY,
-} from '../modules/forms'
+import { PEOPLES_FORM_KEY } from '../modules/forms'
 
-import ReleaseForm from '../components/release-form'
+import PeopleForm from '../components/people-form'
 
-const getFormName = props => `${RELEASES_FORM_KEY}[${props.index}]`
+const getFormName = props => `${PEOPLES_FORM_KEY}[${props.index}]`
 
 export default compose(
   connect(
@@ -21,12 +19,12 @@ export default compose(
       form: getFormName(ownProps),
       enableReinitialize: true,
       destroyOnUnmount: false,
-      initialValues: getReleaseByIndex(state, ownProps.index),
+      initialValues: getPeopleByIndex(state, ownProps.index),
     }),
     (dispatch, ownProps) => ({
-      load: () => dispatch(requestAllReleases()),
+      load: () => dispatch(requestAllPeoples()),
       onSubmit: () => dispatch(startSubmit(getFormName(ownProps))),
     })
   ),
   reduxForm({ enableReinitialize: true, }),
-)(ReleaseForm)
+)(PeopleForm)

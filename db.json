@@ -1,29 +1,56 @@
 {
-  "releases": [
+  "peoples": [
     {
       "id": 10,
-      "description": "description 1",
-      "price": "1"
+      "name": "name 1",
+      "age": "1",
+      "isNice": true,
+      "favoriteColors": []
     },
     {
       "id": 12,
-      "description": "description",
-      "price": "2"
+      "name": "name",
+      "age": "2",
+      "isNice": true,
+      "favoriteColors": []
     },
     {
       "id": 13,
-      "description": "description 3",
-      "price": "3"
+      "name": "name 3",
+      "age": "3",
+      "isNice": true,
+      "favoriteColors": []
     },
     {
       "id": 14,
-      "description": "description",
-      "price": "4"
+      "name": "name",
+      "age": "4",
+      "isNice": true,
+      "favoriteColors": []
     },
     {
       "id": 15,
-      "description": "description 5",
-      "price": "5"
+      "name": "name 5",
+      "age": "55",
+      "isNice": "true",
+      "favoriteColors": ""
     }
+  ],
+  "colors": [
+    "blue",
+    "red",
+    "yellow",
+    "PINK !!!",
+    "gray",
+    "orange"
+  ],
+  "moods": [
+    "°(❛ᴗ❛)°",
+    "ᕕ( ᐛ )ᕗ",
+    "(✿ ♥‿♥)",
+    "(๑˃̵ᴗ˂̵)و",
+    "ヾ(｡ꏿ﹏ꏿ)ﾉﾞ",
+    "(*ﾟﾛﾟ)",
+    "（´＿｀）"
   ]
 }

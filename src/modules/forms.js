@@ -9,18 +9,19 @@ import {
 } from 'redux-form'
 
 import {
-  requestSave as requestSaveRelease,
-} from './releases'
+  requestSave as requestSavePeople,
+} from './peoples'
 
 export const KEY = 'form' // default one ! DO NOT TOUCH before checking documentation
 
-export const RELEASES_FORM_KEY = 'releases'
+export const PEOPLES_FORM_KEY = 'peoples'
 
 // ///////////
 // DETERMINISTIC ACTIONS
 // ///////////
 
 // already provided by the redux-form library
+// see actionTypes of redux-form
 
 // ///////////
 // ACTION CREATORS
@@ -56,9 +57,9 @@ const submitSuccessEpic = (action$, store) => action$
     const formKey = form.split('[')[0]
 
     switch(formKey) {
-      case RELEASES_FORM_KEY:
-        const release = getFormValues(form)(state)
-        observable = Observable.of(requestSaveRelease(release))
+      case PEOPLES_FORM_KEY:
+        const people = getFormValues(form)(state)
+        observable = Observable.of(requestSavePeople(people))
         break
       default:
         observable = Observable.empty()

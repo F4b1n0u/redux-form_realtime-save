@@ -1,10 +1,10 @@
 import { combineEpics } from 'redux-observable'
 import { combineReducers } from 'redux'
 
-import releasesReducer, {
-  KEY as RELEASES_KEY,
-  epic as releasesEpic,
-} from '../modules/releases'
+import peoplesReducer, {
+  KEY as PEOPLES_KEY,
+  epic as peoplesEpic,
+} from '../modules/peoples'
 
 import formsReducer, {
   KEY as FORMS_KEY,
@@ -14,11 +14,11 @@ import formsReducer, {
 // Reducers
 export default combineReducers({
   [FORMS_KEY]: formsReducer,
-  [RELEASES_KEY]: releasesReducer,
+  [PEOPLES_KEY]: peoplesReducer,
 })
 
 // Epics
 export const epic = combineEpics(
   formEpic,
-  releasesEpic,
+  peoplesEpic,
 )

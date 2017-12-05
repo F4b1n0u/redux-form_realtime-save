@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 
-import ReleaseForm from '../containers/release-form'
+import PeopleForm from '../containers/people-form'
 
-export default class ReleaseForms extends Component {
+export default class PeopleForms extends Component {
   componentWillMount() {
     const {
       load = () => {},
@@ -13,14 +13,14 @@ export default class ReleaseForms extends Component {
 
   render() {
     const {
-      releaseIds,
+      peopleIds,
     } = this.props
 
     return (
       <div>
         {
-          releaseIds.map((id, index) => (
-            <ReleaseForm
+          peopleIds.map((id, index) => (
+            <PeopleForm
               key={id}
               index={index}
             />

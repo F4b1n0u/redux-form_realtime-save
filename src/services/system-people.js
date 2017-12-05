@@ -7,23 +7,23 @@ const API_PORT = '3031'
 
 const API_URI = `${API_PROTOCOL}://${API_HOST}:${API_PORT}`
 
-export const fetchReleases = () => {
-  return ajax.getJSON(`${API_URI}/releases`)
+export const fetchPeoples = () => {
+  return ajax.getJSON(`${API_URI}/peoples`)
 }
 
-export const fetchRelease = (id) => {
-  return ajax.getJSON(`${API_URI}/releases/${id}`)
+export const fetchPeople = (id) => {
+  return ajax.getJSON(`${API_URI}/peoples/${id}`)
 }
 
-export const saveRelease = (release) => {
+export const savePeople = (people) => {
   const {
     id,
-  } = release
+  } = people
 
   const setting = {
     method: 'PUT',
-    url: `${API_URI}/releases/${id}`,
-    body: release,
+    url: `${API_URI}/peoples/${id}`,
+    body: people,
   }
 
   return ajax(setting)
