@@ -1,17 +1,14 @@
 import React, { Component } from 'react'
 import { Field } from 'redux-form'
+import Select from 'react-select';
 
 export default class PeopleForm extends Component {
-  componentWillMount() {
-    const {
-      load
-    } = this.props
-
-    load && load()
-  }
-
   render() {
     const {
+      colors,
+      moods,
+      currentName,
+      currentMood,
       // redux-form props
       handleSubmit,
       onSubmit,
@@ -26,7 +23,7 @@ export default class PeopleForm extends Component {
           </div>
         )} */}
           <div>
-            <label>Name</label>
+            <label>{`Name: ${currentName}`}</label>
             <div>
               <Field
                 name="name"
@@ -38,7 +35,7 @@ export default class PeopleForm extends Component {
             </div>
           </div>
           <div>
-            <label>Age</label>
+            <label>{'Age'}</label>
             <div>
               <Field
                 name="age"
@@ -50,12 +47,35 @@ export default class PeopleForm extends Component {
             </div>
           </div>
           <div>
-            <label>isNice</label>
+            <label>{`Mood: ${currentMood.label}`}</label>
             <div>
               <Field
-                name="isNice"
-                component="input"
-                type="checkbox"
+                name="mood"
+                component={props => (
+                  <Select
+                    {...props}
+                    {...props.input}
+                    options={moods}
+                  />
+                )}
+                // onCHange is VERY important because it never trigger blur
+                onChange={handleSubmit(onSubmit)}
+              />
+            </div>
+          </div>
+          <div>
+            <label>Favorite Colors</label>
+            <div>
+              <Field
+                name="favoriteColors"
+                component={props => (
+                  <Select
+                    {...props}
+                    {...props.input}
+                    multi
+                    options={colors}
+                  />
+                )}
                 onBlur={handleSubmit(onSubmit)}
               />
             </div>

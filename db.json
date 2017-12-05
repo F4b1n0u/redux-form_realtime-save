@@ -1,56 +1,81 @@
 {
   "peoples": [
     {
-      "id": 10,
-      "name": "name 1",
+      "id": 1,
+      "name": "name 1 plop",
       "age": "1",
-      "isNice": true,
-      "favoriteColors": []
+      "favoriteColors": [
+        {
+          "label": "black",
+          "value": "#000000"
+        },
+        {
+          "label": "red",
+          "value": "#ff0000"
+        },
+        {
+          "label": "yellow",
+          "value": "#ffff00"
+        }
+      ],
+      "mood": {
+        "label": "ᕕ( ᐛ )ᕗ",
+        "value": "excited"
+      }
     },
     {
-      "id": 12,
-      "name": "name",
+      "id": 2,
+      "name": "name 2",
       "age": "2",
-      "isNice": true,
-      "favoriteColors": []
+      "mood": {
+        "label": "°(❛ᴗ❛)°",
+        "value": "happy"
+      },
+      "favoriteColors": [
+        {
+          "label": "black",
+          "value": "#000000"
+        },
+        {
+          "label": "yellow",
+          "value": "#ffff00"
+        }
+      ]
     },
     {
-      "id": 13,
+      "id": 3,
       "name": "name 3",
       "age": "3",
-      "isNice": true,
+      "mood": {
+        "label": "°(❛ᴗ❛)°",
+        "value": "happy"
+      },
       "favoriteColors": []
     },
     {
-      "id": 14,
-      "name": "name",
-      "age": "4",
-      "isNice": true,
-      "favoriteColors": []
+      "id": 4,
+      "name": "name 4",
+      "age": "8",
+      "mood": {
+        "label": "(✿ ♥‿♥)",
+        "value": "love"
+      },
+      "favoriteColors": [
+        {
+          "label": "black",
+          "value": "#000000"
+        }
+      ]
     },
     {
-      "id": 15,
+      "id": 5,
       "name": "name 5",
-      "age": "55",
-      "isNice": "true",
-      "favoriteColors": ""
+      "age": "5",
+      "mood": {
+        "label": "(✿ ♥‿♥)",
+        "value": "love"
+      },
+      "favoriteColors": []
     }
-  ],
-  "colors": [
-    "blue",
-    "red",
-    "yellow",
-    "PINK !!!",
-    "gray",
-    "orange"
-  ],
-  "moods": [
-    "°(❛ᴗ❛)°",
-    "ᕕ( ᐛ )ᕗ",
-    "(✿ ♥‿♥)",
-    "(๑˃̵ᴗ˂̵)و",
-    "ヾ(｡ꏿ﹏ꏿ)ﾉﾞ",
-    "(*ﾟﾛﾟ)",
-    "（´＿｀）"
   ]
 }

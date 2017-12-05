@@ -23,7 +23,10 @@ export const savePeople = (people) => {
   const setting = {
     method: 'PUT',
     url: `${API_URI}/peoples/${id}`,
-    body: people,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(people),
   }
 
   return ajax(setting)
