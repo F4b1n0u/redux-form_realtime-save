@@ -1,85 +1,56 @@
 import React, { Component } from 'react'
 import { Field } from 'redux-form'
-import Select from 'react-select';
+
+import Input from './form/input'
+import Select from './form/select'
+import MultiSelect from './form/multi-select'
 
 export default class PeopleForm extends Component {
   render() {
     const {
       colors,
       moods,
-      currentName,
-      currentMood,
       // redux-form props
-      handleSubmit,
-      onSubmit,
-      // submitting
+      submitting
     } = this.props
 
     return (
-      <form>
-        {/* {submitting && (
-          <div>
-            {'saving ...'}
-          </div>
-        )} */}
-          <div>
-            <label>{`Name: ${currentName}`}</label>
-            <div>
-              <Field
-                name="name"
-                component="input"
-                type="text"
-                placeholder="Name"
-                onBlur={handleSubmit(onSubmit)}
-              />
-            </div>
-          </div>
-          <div>
-            <label>{'Age'}</label>
-            <div>
-              <Field
-                name="age"
-                component="input"
-                type="number"
-                placeholder="Age"
-                onBlur={handleSubmit(onSubmit)}
-              />
-            </div>
-          </div>
-          <div>
-            <label>{`Mood: ${currentMood.label}`}</label>
-            <div>
-              <Field
-                name="mood"
-                component={props => (
-                  <Select
-                    {...props}
-                    {...props.input}
-                    options={moods}
-                  />
-                )}
-                // onCHange is VERY important because it never trigger blur
-                onChange={handleSubmit(onSubmit)}
-              />
-            </div>
-          </div>
-          <div>
-            <label>Favorite Colors</label>
-            <div>
-              <Field
-                name="favoriteColors"
-                component={props => (
-                  <Select
-                    {...props}
-                    {...props.input}
-                    multi
-                    options={colors}
-                  />
-                )}
-                onBlur={handleSubmit(onSubmit)}
-              />
-            </div>
-          </div>
+      <form className="jumbotron">
+        {submitting && <div className="loader small">Loading...</div>}
+        <Field
+          hasPreview
+          label={'Name'}
+          name="name"
+          type="text"
+          component={Input}
+          placeholder="Enter Name"
+        />
+        <Field
+          label={'Age'}
+          name="age"
+          type="text"
+          component={Input}
+          placeholder="Enter Age"
+        />
+        {/* <Field
+          label={'Is Nice'}
+          name="isNice"
+          type="checkbox"
+          component={Input}
+        /> */}
+        <Field
+          label={'Mood'}
+          name="mood"
+          hasPreview
+          component={Select}
+          options={moods}
+        />
+        <Field
+          label={'Favorite Colors'}
+          name="favoriteColors"
+          component={MultiSelect}
+          options={colors}
+        />
       </form>
     )
   }

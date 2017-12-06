@@ -2,9 +2,14 @@
   "peoples": [
     {
       "id": 1,
-      "name": "name 1 plop",
-      "age": "1",
+      "name": "",
+      "age": "21",
+      "isNice": false,
       "favoriteColors": [
+        {
+          "label": "gray",
+          "value": "#808080"
+        },
         {
           "label": "black",
           "value": "#000000"
@@ -16,66 +21,47 @@
         {
           "label": "yellow",
           "value": "#ffff00"
+        },
+        {
+          "label": "blue",
+          "value": "#0000ff"
+        },
+        {
+          "label": "white",
+          "value": "#ffffff"
         }
       ],
-      "mood": {
-        "label": "ᕕ( ᐛ )ᕗ",
-        "value": "excited"
-      }
+      "mood": "love"
     },
     {
       "id": 2,
-      "name": "name 2",
-      "age": "2",
-      "mood": {
-        "label": "°(❛ᴗ❛)°",
-        "value": "happy"
-      },
+      "name": "Hanna",
+      "age": "20",
+      "mood": "love",
+      "isNice": false,
       "favoriteColors": [
         {
-          "label": "black",
-          "value": "#000000"
+          "label": "red",
+          "value": "#ff0000"
         },
         {
-          "label": "yellow",
-          "value": "#ffff00"
+          "label": "gray",
+          "value": "#808080"
         }
       ]
     },
     {
       "id": 3,
-      "name": "name 3",
-      "age": "3",
-      "mood": {
-        "label": "°(❛ᴗ❛)°",
-        "value": "happy"
-      },
-      "favoriteColors": []
-    },
-    {
-      "id": 4,
-      "name": "name 4",
-      "age": "8",
-      "mood": {
-        "label": "(✿ ♥‿♥)",
-        "value": "love"
-      },
+      "name": "Alex",
+      "age": "27",
+      "mood": "excited",
+      "isNice": false,
       "favoriteColors": [
         {
-          "label": "black",
-          "value": "#000000"
+          "label": "red",
+          "value": "#ff0000"
         }
       ]
-    },
-    {
-      "id": 5,
-      "name": "name 5",
-      "age": "5",
-      "mood": {
-        "label": "(✿ ♥‿♥)",
-        "value": "love"
-      },
-      "favoriteColors": []
     }
   ]
 }

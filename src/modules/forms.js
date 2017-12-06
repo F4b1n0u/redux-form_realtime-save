@@ -16,6 +16,9 @@ export const KEY = 'form' // default one ! DO NOT TOUCH before checking document
 
 export const PEOPLES_FORM_KEY = 'peoples'
 
+export const getPeoplesFormName = props => `${PEOPLES_FORM_KEY}[${props.index}]`
+
+
 // ///////////
 // DETERMINISTIC ACTIONS
 // ///////////
@@ -48,7 +51,7 @@ export default reducer
 // ///////////
 
 const submitSuccessEpic = (action$, store) => action$
-  .ofType(actionTypes.SET_SUBMIT_SUCCEEDED)
+  .ofType(actionTypes.CHANGE)
   .mergeMap(({ meta: { form } }) => {
     const state = store.getState()
     

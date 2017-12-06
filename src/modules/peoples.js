@@ -4,7 +4,12 @@ import { Observable } from 'rxjs/Observable'
 import { combineReducers } from 'redux'
 import { combineEpics } from 'redux-observable'
 import { fetchPeoples, savePeople } from '../services/system-people'
-// import { stopSubmit } from 'redux-form'
+import { startSubmit, stopSubmit } from 'redux-form'
+import { getFormValues } from 'redux-form'
+
+import { errors, warnings } from '../validations/people'
+
+import { getPeoplesFormName } from '../modules/forms'
 
 export const KEY = 'peoples'
 
@@ -13,6 +18,8 @@ export const KEY = 'peoples'
 // ///////////
 
 export const PUT = `spinnup-proto/${KEY}/PUT`
+export const INITIATE_REQUEST     = `spinnup-proto/${KEY}/INITIATE_REQUEST`
+export const TERMINATE_REQUEST    = `spinnup-proto/${KEY}/TERMINATE_REQUEST`
 
 // ///////////
 // ACTION CREATORS
@@ -23,6 +30,14 @@ export const putPeoples = peoples => ({
   payload: peoples,
 })
 
+export const initiateRequest = () => ({
+  type: INITIATE_REQUEST,
+})
+
+export const terminateRequest = () => ({
+  type: TERMINATE_REQUEST,
+})
+
 // ///////////
 // REDUCERS
 // ///////////
@@ -30,6 +45,7 @@ export const putPeoples = peoples => ({
 const initialState = {
   allIds: [],
   byId: {},
+  isPending: false,
 }
 
 const allIdsReducer = (
@@ -62,9 +78,24 @@ const byIdReducer = (
   }
 }
 
+const isPendingReducer = (
+  state = initialState.isPending,
+  action,
+) => {
+  switch (action.type) {
+    case INITIATE_REQUEST:
+      return true
+    case TERMINATE_REQUEST:
+      return false
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   allIds: allIdsReducer,
   byId: byIdReducer,
+  isPending: isPendingReducer,
 })
 
 // ///////////
@@ -82,6 +113,7 @@ export const getAll = state => getAllIds(state).map(getById.bind(null, state))
 // ///////////
 // NON DETERMINISTIC ACTIONS
 // ///////////
+
 
 export const REQUEST_ALL          = `spinnup-proto/${KEY}/REQUEST_ALL`
 export const RECEIVE_ALL_SUCCESS  = `spinnup-proto/${KEY}/RECEIVE_ALL_SUCCESS`
@@ -111,7 +143,7 @@ export const receiveAllFailure = ({ error, validData}) => ({
   }
 })
 
-export const requestSave = people => ({
+export const requestSave = (people) => ({
   type: REQUEST_SAVE,
   payload: people,
 })
@@ -130,29 +162,64 @@ export const receiveSaveFailure = latestPeople => ({
 // EPICS
 // ///////////
 
-const requestPeoplesEpic = (action$, store) => action$
+const initiateRequestEpic = action$ => action$
+  .ofType(REQUEST_ALL, REQUEST_SAVE)
+  .mergeMap(() => Observable.of(initiateRequest()))
+
+const terminateRequestEpic = action$ => action$
+  .ofType(
+    RECEIVE_ALL_SUCCESS,
+    RECEIVE_ALL_FAILURE,
+    RECEIVE_SAVE_SUCCESS,
+    RECEIVE_SAVE_FAILURE,
+  )
+  .mergeMap(() => Observable.of(terminateRequest()))
+
+const requestPeoplesEpic = action$ => action$
   .ofType(REQUEST_ALL)
   .mergeMap(() => fetchPeoples()
       .mergeMap(response => Observable.of(receiveAll(response)))
       .catch(error => Observable.of(receiveAllFailure(error)))
   )
 
-const receivePeoplesEpic = (action$, store) => action$
+const receivePeoplesEpic = action$ => action$
   .ofType(RECEIVE_ALL_SUCCESS)
   .mergeMap(action => Observable.of(putPeoples(action.payload)))
 
-const savePeopleEpic = action$ => action$
+const savePeopleEpic = (action$, { getState, dispatch }) => action$
   .ofType(REQUEST_SAVE)
-  .mergeMap((action) => savePeople(action.payload)
-      .takeUntil(action$.filter(
-        ({ type, payload }) => type === REQUEST_SAVE && payload.id === action.payload.id
-      ))
-      .mergeMap(response => Observable.of(receiveSave(response)))
-      .catch(error => Observable.of(receiveSaveFailure(error)))
-      // .mergeMap(() => Observable.of(stopSubmit(action.payload.id)))
+  .do(action => {
+    const id = action.payload.id
+    const state = getState()
+    const index = getIndexById(state, id)
+    dispatch(startSubmit(getPeoplesFormName({ index })))
+  })
+  .mergeMap(action => savePeople(action.payload)
+    .takeUntil(action$.filter(
+      ({ type, payload }) => type === REQUEST_SAVE && payload.id === action.payload.id
+    ))
+    .mergeMap(response => Observable.of(receiveSave(response)))
+    .catch(error => Observable.of(receiveSaveFailure(error)))
+    .do(() => {
+      const id = action.payload.id
+      const state = getState()
+      const index = getIndexById(state, id)
+
+      const formName = getPeoplesFormName({ index })
+      const values = getFormValues(formName)(state)
+
+      const syncErrors = errors(values)
+      // const syncWarnings = warnings(values)
+
+      // UPDATE_SYNC_WARNINGS
+
+      dispatch(stopSubmit(formName, syncErrors))
+    })
   )
 
 export const epic = combineEpics(
+  initiateRequestEpic,
+  terminateRequestEpic,
   requestPeoplesEpic,
   receivePeoplesEpic,
   savePeopleEpic,
