@@ -1,24 +1,7 @@
 {
   "peoples": [
     {
-      "id": 1,
-      "favoriteColors": [
-        {
-          "label": "gray",
-          "value": "#808080"
-        },
-        {
-          "label": "red",
-          "value": "#ff0000"
-        },
-        {
-          "label": "yellow",
-          "value": "#ffff00"
-        }
-      ],
-      "name": "",
-      "mood": "love",
-      "age": ""
+      "id": 1
     },
     {
       "id": 2
