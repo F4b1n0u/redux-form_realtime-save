@@ -10,13 +10,14 @@ const MultiSelect = (props) => (
     notGrouped={true}
   >
     <Select
-      id={`${props.input.name}.'multi-select'`}
       {...props.input}
+      id={`${props.input.name}.'multi-select'`}
+      multi
+      options={props.options}
+      placeholder={props.placeholder}
       onBlur={function() {
         props.input.onBlur(this.value)
       }}
-      options={props.options}
-      multi
     />
   </Wrapper>
 )

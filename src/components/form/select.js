@@ -12,8 +12,13 @@ const Select = (props) => (
       id={`${props.input.name}.select`}
       value={props.input.value}
       className="form-control"
-      placeholder={props.placeholder}
     >
+      <option
+        disabled
+        value=""
+      >
+        {props.placeholder}
+      </option>
       {
         props.options.map((option, index) => (
           <option

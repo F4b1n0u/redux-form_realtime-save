@@ -44,12 +44,14 @@ export default class PeopleForm extends Component {
           hasPreview
           component={Select}
           options={moods}
+          placeholder={'select a mood'}
         />
         <Field
           label={'Favorite Colors'}
           name="favoriteColors"
           component={MultiSelect}
           options={colors}
+          placeholder={'select the some colors'}
         />
       </form>
     )
