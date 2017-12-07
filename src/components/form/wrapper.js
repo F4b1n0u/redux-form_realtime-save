@@ -6,6 +6,7 @@ const Wrapper = ({
   label,
   type,
   hasPreview,
+  notGrouped,
   children,
   meta: {
     touched,
@@ -16,7 +17,8 @@ const Wrapper = ({
   <div
     className={classnames(
       'field',
-      'form-group', {
+      'form-group',
+      {
         'has-danger': touched && error
       }
     )}
@@ -26,10 +28,12 @@ const Wrapper = ({
     </label>
     {cloneElement(
       children,
-      { className: classnames(
-        'form-control', {
-        'form-control-danger': touched && error
-      }) }
+      {
+        className: classnames({
+          'form-control': !notGrouped,
+          'form-control-danger': touched && error,
+        })
+      }
     )}
     {touched && ((error && (
       <div

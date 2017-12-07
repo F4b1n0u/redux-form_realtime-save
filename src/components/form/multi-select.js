@@ -7,6 +7,7 @@ const MultiSelect = (props) => (
   <Wrapper
     {...props}
     type={'multi-select'}
+    notGrouped={true}
   >
     <Select
       id={`${props.input.name}.'multi-select'`}

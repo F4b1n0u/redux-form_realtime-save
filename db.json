@@ -17,6 +17,10 @@
         {
           "label": "yellow",
           "value": "#ffff00"
+        },
+        {
+          "label": "green",
+          "value": "#008000"
         }
       ],
       "mood": "excited"

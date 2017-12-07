@@ -32,12 +32,12 @@ export default class PeopleForm extends Component {
           component={Input}
           placeholder="Enter Age"
         />
-        <Field
+        {/* <Field
           label={'Is Nice'}
           name="isNice"
           type="checkbox"
           component={Input}
-        />
+        /> */}
         <Field
           label={'Mood'}
           name="mood"
