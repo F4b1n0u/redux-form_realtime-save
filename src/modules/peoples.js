@@ -159,9 +159,12 @@ export const receiveSave = updatedPeople => ({
   payload: updatedPeople,
 })
 
-export const receiveSaveFailure = latestPeople => ({
+export const receiveSaveFailure = (latestPeople, attempt) => ({
   type: RECEIVE_SAVE_FAILURE,
   payload: latestPeople,
+  meta: {
+    attempt,
+  }
 })
 
 // ///////////
@@ -184,43 +187,46 @@ const terminateRequestEpic = action$ => action$
 const requestPeoplesEpic = action$ => action$
   .ofType(REQUEST_ALL)
   .mergeMap(() => fetchPeoples()
-      .mergeMap(response => Observable.of(receiveAll(response)))
-      .catch(error => Observable.of(receiveAllFailure(error)))
+    .mergeMap(response => Observable.of(receiveAll(response)))
+    .catch(error => Observable.of(receiveAllFailure(error)))
   )
 
 const receivePeoplesEpic = action$ => action$
   .ofType(RECEIVE_ALL_SUCCESS)
   .mergeMap(action => Observable.of(putPeoples(action.payload)))
 
-const savePeopleEpic = (action$, { getState, dispatch }) => action$
+const startSubmitEpic = (action$, { getState }) => action$
   .ofType(REQUEST_SAVE)
-  .do(action => {
+  .mergeMap(action => {
     const id = action.payload.id
     const state = getState()
     const index = getIndexById(state, id)
-    dispatch(startSubmit(getPeoplesFormName({ index })))
+    return Observable.of(startSubmit(getPeoplesFormName({ index })))
   })
+
+const stopSumitOnSaveSuccessEpic = (action$, { getState }) => action$
+  .ofType(RECEIVE_SAVE_SUCCESS)
+  .mergeMap(action => {
+    const id = action.payload.id
+    const state = getState()
+    const index = getIndexById(state, id)
+    return Observable.of(stopSubmit(getPeoplesFormName({ index })))
+  })
+
+const stopSumitOnSaveFaillureEpic = (action$, { getState }) => action$
+  .ofType(RECEIVE_SAVE_FAILURE)
+  .mergeMap(action => {
+    const id = action.meta.id
+    const state = getState()
+    const index = getIndexById(state, id)
+    return Observable.of(stopSubmit(getPeoplesFormName({ index })))
+  })
+
+const savePeopleEpic = (action$, { getState, dispatch }) => action$
+  .ofType(REQUEST_SAVE)
   .mergeMap(action => savePeople(action.payload)
-    .takeUntil(action$.filter(
-      ({ type, payload }) => type === REQUEST_SAVE && payload.id === action.payload.id
-    ))
     .mergeMap(response => Observable.of(receiveSave(response)))
-    .catch(error => Observable.of(receiveSaveFailure(error)))
-    .do(() => {
-      const id = action.payload.id
-      const state = getState()
-      const index = getIndexById(state, id)
-
-      const formName = getPeoplesFormName({ index })
-      const values = getFormValues(formName)(state)
-
-      const syncErrors = errors(values)
-      // const syncWarnings = warnings(values)
-
-      // UPDATE_SYNC_WARNINGS
-
-      dispatch(stopSubmit(formName, syncErrors))
-    })
+    .catch(error => Observable.of(receiveSaveFailure(error, action.payload)))
   )
 
 const receivePeopleEpic = action$ => action$
@@ -233,5 +239,8 @@ export const epic = combineEpics(
   requestPeoplesEpic,
   receivePeoplesEpic,
   savePeopleEpic,
+  startSubmitEpic,
+  stopSumitOnSaveSuccessEpic,
+  stopSumitOnSaveFaillureEpic,
   receivePeopleEpic,
 )
