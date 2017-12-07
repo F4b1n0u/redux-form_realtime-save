@@ -2,13 +2,15 @@ import React from 'react'
 
 import Wrapper from './wrapper'
 
-export default (props) => (
+const Select = (props) => (
   <Wrapper
     {...props}
+    type={'select'}
   >
     <select
       {...props.input}
-      value={props.input.value.value}
+      id={`${props.input.name}.select`}
+      value={props.input.value}
       className="form-control"
       placeholder={props.placeholder}
     >
@@ -25,3 +27,5 @@ export default (props) => (
     </select>
   </Wrapper>
 )
+
+export default Select

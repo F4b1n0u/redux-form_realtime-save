@@ -2,7 +2,7 @@ import React from 'react'
 
 import Wrapper from './wrapper'
 
-export default (props) => (
+const Input = (props) => (
   <Wrapper
     {...props}
   >
@@ -15,3 +15,5 @@ export default (props) => (
     />
   </Wrapper>
 )
+
+export default Input

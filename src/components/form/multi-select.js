@@ -3,9 +3,10 @@ import Select from 'react-select';
 
 import Wrapper from './wrapper'
 
-export default (props) => (
+const MultiSelect = (props) => (
   <Wrapper
     {...props}
+    type={'multi-select'}
   >
     <Select
       id={`${props.input.name}.'multi-select'`}
@@ -18,3 +19,5 @@ export default (props) => (
     />
   </Wrapper>
 )
+
+export default MultiSelect

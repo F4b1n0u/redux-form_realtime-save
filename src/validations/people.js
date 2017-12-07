@@ -11,12 +11,12 @@ import validator, {
 const erroRules = {
   name: [required, maxLength(20)],
   age: [required, number, minValue(18)],
-  favoriteColors: [notMore(5, 'colors')]
+  favoriteColors: [notMore(3, 'colors')]
 }
 
 const warningRules = {
   age: [tooOld],
-  favoriteColors: [atLeast(3, 'colors')]
+  favoriteColors: [atLeast(1, 'colors')]
 }
 
 export const errors = validator.bind(null, erroRules)

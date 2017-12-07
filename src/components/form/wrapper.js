@@ -1,7 +1,7 @@
 import React, { cloneElement } from 'react'
 import classnames from 'classnames'
 
-export default ({
+const Wrapper = ({
   input,
   label,
   type,
@@ -15,7 +15,8 @@ export default ({
 }) => (
   <div
     className={classnames(
-      `form-group`, {
+      'field',
+      'form-group', {
         'has-danger': touched && error
       }
     )}
@@ -32,10 +33,12 @@ export default ({
     )}
     {touched && ((error && (
       <div
-        className="form-control-feedback"
+        className="form-control-feedback message"
       >
         {error}
       </div>
     )) || (warning && <span>{warning}</span>))}
   </div>
 )
+
+export default Wrapper

@@ -2,13 +2,35 @@
   "peoples": [
     {
       "id": 1,
-      "name": "",
-      "age": "21",
-      "isNice": false,
+      "name": "Fabien",
+      "age": "32",
+      "isNice": true,
       "favoriteColors": [
+        {
+          "label": "red",
+          "value": "#ff0000"
+        },
         {
           "label": "gray",
           "value": "#808080"
+        },
+        {
+          "label": "yellow",
+          "value": "#ffff00"
+        }
+      ],
+      "mood": "excited"
+    },
+    {
+      "id": 2,
+      "name": "Hannah",
+      "age": "24",
+      "mood": "sad",
+      "isNice": false,
+      "favoriteColors": [
+        {
+          "label": "green",
+          "value": "#008000"
         },
         {
           "label": "black",
@@ -17,36 +39,6 @@
         {
           "label": "red",
           "value": "#ff0000"
-        },
-        {
-          "label": "yellow",
-          "value": "#ffff00"
-        },
-        {
-          "label": "blue",
-          "value": "#0000ff"
-        },
-        {
-          "label": "white",
-          "value": "#ffffff"
-        }
-      ],
-      "mood": "love"
-    },
-    {
-      "id": 2,
-      "name": "Hanna",
-      "age": "20",
-      "mood": "love",
-      "isNice": false,
-      "favoriteColors": [
-        {
-          "label": "red",
-          "value": "#ff0000"
-        },
-        {
-          "label": "gray",
-          "value": "#808080"
         }
       ]
     },
@@ -54,12 +46,12 @@
       "id": 3,
       "name": "Alex",
       "age": "27",
-      "mood": "excited",
+      "mood": "confused",
       "isNice": false,
       "favoriteColors": [
         {
-          "label": "red",
-          "value": "#ff0000"
+          "label": "blue",
+          "value": "#0000ff"
         }
       ]
     }

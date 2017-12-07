@@ -60,6 +60,6 @@ export const atLeast = (min, label) => value =>
 
 export const notMore = (max, label) => value =>
     value && value.length > max ?
-      `you should have at least ${max} ${label}` :
+      `you cannot have more than ${max} ${label}` :
       undefined
   
