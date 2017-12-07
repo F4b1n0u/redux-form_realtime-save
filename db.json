@@ -2,23 +2,35 @@
   "peoples": [
     {
       "id": 1,
+      "favoriteColors": [
+        {
+          "label": "gray",
+          "value": "#808080"
+        },
+        {
+          "label": "red",
+          "value": "#ff0000"
+        },
+        {
+          "label": "yellow",
+          "value": "#ffff00"
+        }
+      ],
       "name": "",
-      "isNice": true,
-      "favoriteColors": [],
       "mood": "love",
+      "age": ""
     },
     {
-      "id": 2,
-      "name": "",
-      "age": null,
-      "isNice": false,
-      "favoriteColors": []
+      "id": 2
     },
     {
-      "id": 3,
-      "name": "",
-      "isNice": false,
-      "favoriteColors": []
+      "id": 3
+    },
+    {
+      "id": 4
+    },
+    {
+      "id": 5
     }
   ]
 }
