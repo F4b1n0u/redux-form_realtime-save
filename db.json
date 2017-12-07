@@ -2,62 +2,23 @@
   "peoples": [
     {
       "id": 1,
-      "name": "Fabien",
-      "age": "32",
+      "name": "",
       "isNice": true,
-      "favoriteColors": [
-        {
-          "label": "red",
-          "value": "#ff0000"
-        },
-        {
-          "label": "gray",
-          "value": "#808080"
-        },
-        {
-          "label": "yellow",
-          "value": "#ffff00"
-        },
-        {
-          "label": "green",
-          "value": "#008000"
-        }
-      ],
-      "mood": "excited"
+      "favoriteColors": [],
+      "mood": "love",
     },
     {
       "id": 2,
-      "name": "Hannah",
-      "age": "24",
-      "mood": "sad",
+      "name": "",
+      "age": null,
       "isNice": false,
-      "favoriteColors": [
-        {
-          "label": "green",
-          "value": "#008000"
-        },
-        {
-          "label": "black",
-          "value": "#000000"
-        },
-        {
-          "label": "red",
-          "value": "#ff0000"
-        }
-      ]
+      "favoriteColors": []
     },
     {
       "id": 3,
-      "name": "Alex",
-      "age": "27",
-      "mood": "confused",
+      "name": "",
       "isNice": false,
-      "favoriteColors": [
-        {
-          "label": "blue",
-          "value": "#0000ff"
-        }
-      ]
+      "favoriteColors": []
     }
   ]
 }
