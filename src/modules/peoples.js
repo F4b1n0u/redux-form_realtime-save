@@ -18,6 +18,7 @@ export const KEY = 'peoples'
 // ///////////
 
 export const PUT = `spinnup-proto/${KEY}/PUT`
+export const PUT_ALL = `spinnup-proto/${KEY}/PUT_ALL`
 export const INITIATE_REQUEST     = `spinnup-proto/${KEY}/INITIATE_REQUEST`
 export const TERMINATE_REQUEST    = `spinnup-proto/${KEY}/TERMINATE_REQUEST`
 
@@ -26,8 +27,13 @@ export const TERMINATE_REQUEST    = `spinnup-proto/${KEY}/TERMINATE_REQUEST`
 // ///////////
 
 export const putPeoples = peoples => ({
-  type: PUT,
+  type: PUT_ALL,
   payload: peoples,
+})
+
+export const putPeople = people => ({
+  type: PUT,
+  payload: people,
 })
 
 export const initiateRequest = () => ({
@@ -53,7 +59,7 @@ const allIdsReducer = (
   action,
 ) => {
   switch (action.type) {
-    case PUT:
+    case PUT_ALL:
       return action.payload.map(people => people.id)
     default:
       return state
@@ -65,7 +71,7 @@ const byIdReducer = (
   action,
 ) => {
   switch (action.type) {
-    case PUT:
+    case PUT_ALL:
       return action.payload.reduce(
         (map, people) => {
           map[people.id] = people
@@ -217,10 +223,15 @@ const savePeopleEpic = (action$, { getState, dispatch }) => action$
     })
   )
 
+const receivePeopleEpic = action$ => action$
+  .ofType(RECEIVE_SAVE_SUCCESS)
+  .mergeMap(action => Observable.of(putPeople(action.payload)))
+
 export const epic = combineEpics(
   initiateRequestEpic,
   terminateRequestEpic,
   requestPeoplesEpic,
   receivePeoplesEpic,
   savePeopleEpic,
+  receivePeopleEpic,
 )
