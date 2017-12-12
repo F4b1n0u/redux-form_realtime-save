@@ -17,23 +17,23 @@ export const KEY = 'peoples'
 // DETERMINISTIC ACTIONS
 // ///////////
 
-export const PUT = `spinnup-proto/${KEY}/PUT`
-export const PUT_ALL = `spinnup-proto/${KEY}/PUT_ALL`
-export const INITIATE_REQUEST     = `spinnup-proto/${KEY}/INITIATE_REQUEST`
-export const TERMINATE_REQUEST    = `spinnup-proto/${KEY}/TERMINATE_REQUEST`
+export const PUT                = `spinnup-proto/${KEY}/PUT`
+export const PUT_ALL            = `spinnup-proto/${KEY}/PUT_ALL`
+export const INITIATE_REQUEST   = `spinnup-proto/${KEY}/INITIATE_REQUEST`
+export const TERMINATE_REQUEST  = `spinnup-proto/${KEY}/TERMINATE_REQUEST`
 
 // ///////////
 // ACTION CREATORS
 // ///////////
 
-export const putPeoples = peoples => ({
-  type: PUT_ALL,
-  payload: peoples,
-})
-
 export const putPeople = people => ({
   type: PUT,
   payload: people,
+})
+
+export const putPeoples = peoples => ({
+  type: PUT_ALL,
+  payload: peoples,
 })
 
 export const initiateRequest = () => ({
@@ -119,7 +119,6 @@ export const getAll = state => getAllIds(state).map(getById.bind(null, state))
 // ///////////
 // NON DETERMINISTIC ACTIONS
 // ///////////
-
 
 export const REQUEST_ALL          = `spinnup-proto/${KEY}/REQUEST_ALL`
 export const RECEIVE_ALL_SUCCESS  = `spinnup-proto/${KEY}/RECEIVE_ALL_SUCCESS`
@@ -225,6 +224,12 @@ const stopSumitOnSaveFaillureEpic = (action$, { getState }) => action$
 const savePeopleEpic = (action$, { getState, dispatch }) => action$
   .ofType(REQUEST_SAVE)
   .mergeMap(action => savePeople(action.payload)
+    .takeUntil(action$
+      .ofType(REQUEST_SAVE)
+      .filter(
+        ({ payload }) => payload.id === action.payload.id
+      )
+    )
     .mergeMap(({ response }) => Observable.of(receiveSave(response)))
     .catch(error => Observable.of(receiveSaveFailure(error, action.payload)))
   )
