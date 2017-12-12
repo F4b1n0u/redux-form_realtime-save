@@ -192,12 +192,11 @@ const requestPeoplesEpic = action$ => action$
 
 const receivePeoplesEpic = action$ => action$
   .ofType(RECEIVE_ALL_SUCCESS)
-  .mergeMap(action => Observable.of(putPeoples(action.payload)))
+  .mergeMap(({ payload }) => Observable.of(putPeoples(payload)))
 
 const startSubmitEpic = (action$, { getState }) => action$
   .ofType(REQUEST_SAVE)
-  .mergeMap(action => {
-    const id = action.payload.id
+  .mergeMap(({payload: { id }}) => {
     const state = getState()
     const index = getIndexById(state, id)
     return Observable.of(startSubmit(getPeoplesFormName({ index })))
@@ -205,8 +204,7 @@ const startSubmitEpic = (action$, { getState }) => action$
 
 const stopSumitOnSaveSuccessEpic = (action$, { getState }) => action$
   .ofType(RECEIVE_SAVE_SUCCESS)
-  .mergeMap(action => {
-    const id = action.payload.id
+  .mergeMap(({payload: { id }}) => {
     const state = getState()
     const index = getIndexById(state, id)
     return Observable.of(stopSubmit(getPeoplesFormName({ index })))
@@ -214,8 +212,7 @@ const stopSumitOnSaveSuccessEpic = (action$, { getState }) => action$
 
 const stopSumitOnSaveFaillureEpic = (action$, { getState }) => action$
   .ofType(RECEIVE_SAVE_FAILURE)
-  .mergeMap(action => {
-    const id = action.meta.id
+  .mergeMap(({payload: { id }}) => {
     const state = getState()
     const index = getIndexById(state, id)
     return Observable.of(stopSubmit(getPeoplesFormName({ index })))
@@ -236,7 +233,7 @@ const savePeopleEpic = (action$, { getState, dispatch }) => action$
 
 const receivePeopleEpic = action$ => action$
   .ofType(RECEIVE_SAVE_SUCCESS)
-  .mergeMap(action => Observable.of(putPeople(action.payload)))
+  .mergeMap(({ payload }) => Observable.of(putPeople(payload)))
 
 export const epic = combineEpics(
   initiateRequestEpic,
