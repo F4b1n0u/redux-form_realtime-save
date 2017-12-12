@@ -19,10 +19,10 @@ export default class PeopleForms extends Component {
     return (
       <div>
         {
-          peopleIds.map((id, index) => (
+          peopleIds.map((id) => (
             <PeopleForm
               key={id}
-              index={index}
+              id={id}
             />
           ))
         }

@@ -4,7 +4,8 @@ import { reduxForm } from 'redux-form'
 
 import {
   requestAll as requestAllPeoples,
-  getByIndex as getPeopleByIndex,
+  getById as getPeopleById,
+  getIndexById as getPeopleIndexById,
 } from '../modules/peoples'
 
 import {
@@ -19,10 +20,11 @@ import PeopleForm from '../components/people-form'
 export default compose(
   connect(
     (state, ownProps) => {
-      const formName = getPeoplesFormName(ownProps)
+      const index = getPeopleIndexById(state, ownProps.id)
+      const formName = getPeoplesFormName({ index })
       return {
         form: formName,
-        initialValues: getPeopleByIndex(state, ownProps.index),
+        initialValues: getPeopleById(state, ownProps.id),
         
         colors: getColors(state),
         moods: getMoods(state),
