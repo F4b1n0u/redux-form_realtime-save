@@ -50,7 +50,7 @@ export default reducer
 // EPICS
 // ///////////
 
-const submitSuccessEpic = (action$, store) => action$
+const fieldChangeEpic = (action$, store) => action$
   .ofType(actionTypes.CHANGE)
   .mergeMap(({ meta: { form } }) => {
     const state = store.getState()
@@ -73,5 +73,5 @@ const submitSuccessEpic = (action$, store) => action$
   })
 
 export const epic = combineEpics(
-  submitSuccessEpic,
+  fieldChangeEpic,
 )
