@@ -225,7 +225,7 @@ const stopSumitOnSaveFaillureEpic = (action$, { getState }) => action$
 const savePeopleEpic = (action$, { getState, dispatch }) => action$
   .ofType(REQUEST_SAVE)
   .mergeMap(action => savePeople(action.payload)
-    .mergeMap(response => Observable.of(receiveSave(response)))
+    .mergeMap(({ response }) => Observable.of(receiveSave(response)))
     .catch(error => Observable.of(receiveSaveFailure(error, action.payload)))
   )
 
