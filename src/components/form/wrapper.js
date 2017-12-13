@@ -19,6 +19,7 @@ const Wrapper = ({
       'field',
       'form-group',
       {
+        'has-warning': touched && warning && !error,
         'has-danger': touched && error
       }
     )}
@@ -31,17 +32,27 @@ const Wrapper = ({
       {
         className: classnames({
           'form-control': !notGrouped,
+          'form-control-warning': touched && warning && !error,
           'form-control-danger': touched && error,
         })
       }
     )}
-    {touched && ((error && (
-      <div
-        className="form-control-feedback message"
-      >
-        {error}
-      </div>
-    )) || (warning && <span>{warning}</span>))}
+    {touched && (
+      (error && (
+        <div
+          className="form-control-feedback message"
+        >
+          {error}
+        </div>
+      )) ||
+      ( warning && (
+        <div
+          className="form-control-feedback message"
+        >
+          {warning}
+        </div>
+      ))
+    )}
   </div>
 )
 

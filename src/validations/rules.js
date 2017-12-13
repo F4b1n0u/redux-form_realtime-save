@@ -49,8 +49,8 @@ export const minValue = min => value =>
     undefined
 
 export const tooOld = value =>
-  value && value > 65 ?
-    'You are too old for this shit' :
+  value && parseInt(value) > 90 ?
+    'Are you not too old for this shit ?' :
     undefined
 
 export const atLeast = (min, label) => value =>

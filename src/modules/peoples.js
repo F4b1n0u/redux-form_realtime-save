@@ -3,12 +3,16 @@ import 'rxjs'
 import { Observable } from 'rxjs/Observable'
 import { combineReducers } from 'redux'
 import { combineEpics } from 'redux-observable'
-import { startSubmit, stopSubmit } from 'redux-form'
+import {
+  startSubmit,
+  stopSubmit,
+  updateSyncWarnings,
+  getFormValues,
+} from 'redux-form'
 
 import { fetchPeoples, savePeople } from '../services/system-people'
-
-
 import { getPeoplesFormName } from '../modules/forms'
+import { errors, warnings } from '../validations/people'
 
 export const KEY = 'peoples'
 
@@ -195,10 +199,15 @@ const receivePeoplesEpic = action$ => action$
 
 const startSubmitEpic = (action$, { getState }) => action$
   .ofType(REQUEST_SAVE)
-  .mergeMap(({payload: { id }}) => {
+  .mergeMap(({ payload: { id } }) => {
     const state = getState()
     const index = getIndexById(state, id)
-    return Observable.of(startSubmit(getPeoplesFormName({ index })))
+    const formName = getPeoplesFormName({ index })
+    const value = getFormValues(formName)(state)
+    return [
+      startSubmit(formName),
+      updateSyncWarnings(formName, warnings(value)),
+    ]
   })
 
 const stopSumitOnSaveSuccessEpic = (action$, { getState }) => action$
@@ -206,7 +215,9 @@ const stopSumitOnSaveSuccessEpic = (action$, { getState }) => action$
   .mergeMap(({payload: { id }}) => {
     const state = getState()
     const index = getIndexById(state, id)
-    return Observable.of(stopSubmit(getPeoplesFormName({ index })))
+    const formName = getPeoplesFormName({ index })
+    const value = getFormValues(formName)(state)
+    return Observable.of(stopSubmit(formName, errors(value)))
   })
 
 const stopSumitOnSaveFaillureEpic = (action$, { getState }) => action$
