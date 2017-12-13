@@ -3,11 +3,10 @@ import 'rxjs'
 import { Observable } from 'rxjs/Observable'
 import { combineReducers } from 'redux'
 import { combineEpics } from 'redux-observable'
-import { fetchPeoples, savePeople } from '../services/system-people'
 import { startSubmit, stopSubmit } from 'redux-form'
-import { getFormValues } from 'redux-form'
 
-import { errors, warnings } from '../validations/people'
+import { fetchPeoples, savePeople } from '../services/system-people'
+
 
 import { getPeoplesFormName } from '../modules/forms'
 
@@ -218,14 +217,13 @@ const stopSumitOnSaveFaillureEpic = (action$, { getState }) => action$
     return Observable.of(stopSubmit(getPeoplesFormName({ index })))
   })
 
+const bySameId = (actionA, actionB) => actionA.payload.id === actionB.payload.id
 const savePeopleEpic = (action$, { getState, dispatch }) => action$
   .ofType(REQUEST_SAVE)
   .mergeMap(action => savePeople(action.payload)
     .takeUntil(action$
       .ofType(REQUEST_SAVE)
-      .filter(
-        ({ payload }) => payload.id === action.payload.id
-      )
+      .filter(bySameId.bind(null, action))
     )
     .mergeMap(({ response }) => Observable.of(receiveSave(response)))
     .catch(error => Observable.of(receiveSaveFailure(error, action.payload)))
