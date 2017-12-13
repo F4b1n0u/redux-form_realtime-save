@@ -212,7 +212,7 @@ const startSubmitEpic = (action$, { getState }) => action$
 
 const stopSumitOnSaveSuccessEpic = (action$, { getState }) => action$
   .ofType(RECEIVE_SAVE_SUCCESS)
-  .mergeMap(({payload: { id }}) => {
+  .mergeMap(({ payload: { id } }) => {
     const state = getState()
     const index = getIndexById(state, id)
     const formName = getPeoplesFormName({ index })
@@ -222,7 +222,7 @@ const stopSumitOnSaveSuccessEpic = (action$, { getState }) => action$
 
 const stopSumitOnSaveFaillureEpic = (action$, { getState }) => action$
   .ofType(RECEIVE_SAVE_FAILURE)
-  .mergeMap(({payload: { id }}) => {
+  .mergeMap(({ payload: { id } }) => {
     const state = getState()
     const index = getIndexById(state, id)
     return Observable.of(stopSubmit(getPeoplesFormName({ index })))
